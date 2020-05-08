@@ -21,6 +21,8 @@ services:
   postgres:
     # TypeORM fails with Postgres v.12
     image: postgres:11.5
+    env_file:
+      - .development.env
     ports:
       - "$POSTGRES_PORT:5432"
     environment:
