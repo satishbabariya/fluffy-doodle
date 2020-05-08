@@ -1,0 +1,41 @@
+version: '3'
+
+networks:
+  fluffy_doodle_network:
+
+services:
+  app:
+    env_file:
+      - .development.env
+    container_name: fluffy_doodle
+    restart: always
+    build: .
+    ports:
+      - "$PORT:$PORT"
+    networks:
+      - fluffy_doodle_network
+    links:
+      - postgres
+      - redis
+
+  postgres:
+    # TypeORM fails with Postgres v.12
+    image: postgres:11.5
+    ports:
+      - 5455:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - ./db-data:/var/lib/postgresql/data
+    networks:
+      - fluffy_doodle_network
+
+  redis:
+    image: redis:alpine
+    ports:
+      - 6399:6379
+    command: redis-server
+    networks:
+      - fluffy_doodle_network
