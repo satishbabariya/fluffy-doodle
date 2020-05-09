@@ -55,6 +55,17 @@ export default class MangaReaderCrawler extends BaseCrawler {
     });
   }
 
+  _getLatestChapters(): Promise<any> {
+    return new Promise(async (resolve) => {
+      this.retriever("http://www.mangareader.net/latest", "#latestchapters", {
+        links: [".chapter", "a@href"],
+      }).then((res: any) => {
+        const chapters = res.links;
+        resolve(chapters);
+      });
+    });
+  }
+
   _getMangaInfo(location: string): Promise<any> {
     return new Promise(async (resolve) => {
       this.retriever(location, "#wrapper_body", {
