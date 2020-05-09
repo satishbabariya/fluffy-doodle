@@ -24,6 +24,8 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "bullmq": "^1.8.7",
+    "ioredis": "^4.16.3",
     "x-ray": "^2.3.3"
   }
 }

@@ -1,5 +1,19 @@
 import { MangaReaderCrawler } from "./crawlers";
 
-const mangareder = new MangaReaderCrawler();
+async function main() {
+  const mangareder = new MangaReaderCrawler();
 
-mangareder._getMangaInfo("http://www.mangareader.net/one-piece");
+  const list = await mangareder.getMangaList(true);
+
+  const location = "http://www.mangareader.net/naruto";
+  const info = await mangareder.getMangaInfo(location);
+
+  const chapters = await mangareder.getChapters(location);
+
+  const pages = await mangareder.getPages(
+    "http://www.mangareader.net/naruto/700"
+  );
+  console.log(pages);
+}
+
+main();
